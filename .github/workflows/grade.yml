@@ -1,0 +1,22 @@
+name: Run Notebook Grader on: workflow_dispatch: push: branches: [ main ]
+
+jobs: grade: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10'
+
+  - name: Install dependencies
+    run: pip install --upgrade pip && pip install scikit-learn pandas
+
+  - name: Run grader script
+    run: |
+      python grader.py
+
+  - name: Upload grade artifact
+    uses: actions/upload-artifact@v3
+    with:
+      name: grade
+      path: grade.txt
+
+      "Add grading workflow".
